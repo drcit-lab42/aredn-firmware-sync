@@ -22,3 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - This is a **release candidate**. Functionality tested locally, may require adjustments in other environments.
 - Feedback is encouraged before the final **v1.0.0** release.
 
+## [v1.0.1-rc.1] - 2025-08-26
+### Fixed
+- Run `collect.py` from `$ROOT` instead of `$AFS` to rebuild JSON indexes reliably.
