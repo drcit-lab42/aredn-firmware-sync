@@ -47,14 +47,25 @@ else
   log "ERROR: config.js not found at $CONFIG_JS"
 fi
 
-# 3) Run collect.py
-if [[ -f "$COLLECT_PY" ]]; then
-  log "Running collect.py..."
-  ( cd "$AFS" && PYTHONWARNINGS=ignore::SyntaxWarning \
-      python3 ./misc/collect.py . ./www/ ) >>"$LOG" 2>&1
-  log "collect.py complete."
+# 3) run collect.py
+if [ -x "$AFS/misc/collect.py" ]; then
+  (
+    cd "$ROOT" || { log "ERROR: ROOT dir not found: $ROOT"; exit 1; }
+    # make sure it’s executable (first-run safety)
+    chmod +x "$AFS/misc/collect.py" 2>/dev/null || true
+    log "collect: cwd=$ROOT  using $(head -1 ./afs/misc/collect.py)"
+    # suppress noisy SyntaxWarning; write all output to the log
+    PYTHONWARNINGS=ignore::SyntaxWarning \
+    ./afs/misc/collect.py . ./afs/www/ >>"$LOG" 2>&1
+  )
+  rc=$?
+  if [ $rc -ne 0 ]; then
+    log "ERROR: collect.py exited with status $rc"
+    exit $rc
+  fi
+  log "collect.py complete"
 else
-  log "WARNING: collect.py not found at $COLLECT_PY"
+  log "WARNING: collect.py not found or not executable at $AFS/misc/collect.py"
 fi
 
 log "=== run finished ==="
