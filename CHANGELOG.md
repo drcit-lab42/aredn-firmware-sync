@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [v1.0.0-rc.2] - 2025-08-26
+
+### Fixed
+- Corrected `collect.py` execution to run from `$ROOT` instead of hard-coded path.
+- Ensured firmware indexes are regenerated properly when the sync script runs.
+
+
 ## [v1.0.0-rc.1] - 2025-08-25
 
 ### Added
@@ -21,7 +28,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Notes
 - This is a **release candidate**. Functionality tested locally, may require adjustments in other environments.
 - Feedback is encouraged before the final **v1.0.0** release.
-
-## [v1.0.1-rc.1] - 2025-08-26
-### Fixed
-- Run `collect.py` from `$ROOT` instead of `$AFS` to rebuild JSON indexes reliably.
