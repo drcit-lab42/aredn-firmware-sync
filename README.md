@@ -9,7 +9,7 @@ This script was designed for use by **Disaster Response Communications & Informa
 
 ```bash
 # 1. Clone this repo
-git clone https://drcit.dev/DRCIT/aredn.git
+git clone https://github.com/drcit-lab42/aredn-firmware-sync.git
 cd aredn
 
 # 2. Edit aredn_sync.sh variables for your node
