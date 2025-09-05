@@ -47,7 +47,15 @@ else
   log "ERROR: config.js not found at $CONFIG_JS"
 fi
 
-# 3) run collect.py
+# 3) Backup config.js before collect.py
+# One the team at AREDNmesh fix the bug, this step will no longer be needed.
+COLLECT_BACKUP="${CONFIG_JS}.collect_backup.$(date +%F-%H%M%S)"
+if [[ -f "$CONFIG_JS" ]]; then
+  log "Creating backup of config.js before collect.py: $COLLECT_BACKUP"
+  cp -a "$CONFIG_JS" "$COLLECT_BACKUP"
+fi
+
+# 4) run collect.py
 if [ -x "$AFS/misc/collect.py" ]; then
   (
     cd "$ROOT" || { log "ERROR: ROOT dir not found: $ROOT"; exit 1; }
@@ -66,6 +74,16 @@ if [ -x "$AFS/misc/collect.py" ]; then
   log "collect.py complete"
 else
   log "WARNING: collect.py not found or not executable at $AFS/misc/collect.py"
+fi
+
+# 5) Restore config.js from backup
+# One the team at AREDNmesh fix the bug, this step will no longer be needed.
+if [[ -f "$COLLECT_BACKUP" ]]; then
+  log "Restoring config.js from backup: $COLLECT_BACKUP"
+  cp -a "$COLLECT_BACKUP" "$CONFIG_JS"
+  log "config.js restored successfully"
+else
+  log "WARNING: backup file not found for restoration: $COLLECT_BACKUP"
 fi
 
 log "=== run finished ==="
